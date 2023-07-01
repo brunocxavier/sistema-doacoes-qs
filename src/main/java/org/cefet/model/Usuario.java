@@ -1,8 +1,6 @@
 package org.cefet.model;
 
-import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
@@ -13,7 +11,13 @@ public class Usuario {
     private String email;
     private String senha;
 
-    public void exibeHome() {
+    public void exibeHome() {}
 
-    };
+    public void cadastra() {}
+
+    public void update() {}
+
+    public boolean loga(String s) {
+        return senha.equals(s);
+    }
 }

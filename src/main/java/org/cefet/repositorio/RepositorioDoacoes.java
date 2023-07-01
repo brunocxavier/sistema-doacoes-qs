@@ -3,7 +3,6 @@ package org.cefet.repositorio;
 
 import com.google.gson.Gson;
 import org.cefet.model.Doacao;
-import org.cefet.model.UsuarioComum;
 
 import javax.inject.Singleton;
 import java.io.FileReader;
@@ -21,7 +20,7 @@ public class RepositorioDoacoes {
         try {
             fileReader = new FileReader("doacoes.json");
             Gson gson = new Gson();
-            List<Doacao> doacoes = gson.fromJson(fileReader, List.class);
+            List<Doacao> doacoes = Arrays.asList(gson.fromJson(fileReader, Doacao[].class));
             return doacoes.stream()
                     .filter(doacao -> id.equals(doacao.getId()))
                     .findFirst()
@@ -36,7 +35,7 @@ public class RepositorioDoacoes {
         try {
             fileReader = new FileReader("doacoes.json");
             Gson gson = new Gson();
-            return gson.fromJson(fileReader, List.class);
+            return new ArrayList<>(Arrays.asList(gson.fromJson(fileReader, Doacao[].class)));
         } catch (IOException e) {
             System.out.println("Arquivo nao encontrado");
         }
@@ -51,8 +50,14 @@ public class RepositorioDoacoes {
             Doacao[] doacoesArray = gson.fromJson(fileReader, Doacao[].class);
             List<Doacao> doacoes = new ArrayList<>();
             if (doacoesArray != null) {
-                doacoes = Arrays.asList(doacoesArray);
+                doacoes = new ArrayList<>(Arrays.asList(doacoesArray));
             }
+
+            doacoes.stream()
+                    .filter(doacaoBd -> doacaoBd.getId().equalsIgnoreCase(doacao.getId()))
+                    .findFirst()
+                    .map(doacoes::remove);
+
             doacao.setId(String.valueOf(doacoes.size()));
             doacoes.add(doacao);
             FileWriter fileWriter = new FileWriter("doacoes.json");

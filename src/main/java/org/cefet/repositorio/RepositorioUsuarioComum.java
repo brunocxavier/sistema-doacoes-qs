@@ -2,7 +2,6 @@ package org.cefet.repositorio;
 
 import com.google.gson.Gson;
 import org.cefet.model.Usuario;
-import org.cefet.model.UsuarioAdm;
 import org.cefet.model.UsuarioComum;
 
 import javax.inject.Singleton;
@@ -12,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Singleton
@@ -34,15 +32,24 @@ public class RepositorioUsuarioComum {
         return null;
     }
 
-    public List<Usuario> getAll() {
+    public void update(UsuarioComum usuario) {
         try {
             fileReader = new FileReader("usuarios-basicos.json");
             Gson gson = new Gson();
-            return Arrays.asList(gson.fromJson(fileReader, Usuario[].class));
+            Usuario[] usuarioComums = gson.fromJson(fileReader, Usuario[].class);
+            List<Usuario> usuarios = new ArrayList<>();
+            if (usuarioComums != null) {
+                usuarios = new ArrayList<>(Arrays.asList(usuarioComums));
+            }
+            System.out.println("Usuario criado");
+            usuarios.add(usuario);
+            FileWriter fileWriter = new FileWriter("usuarios-basicos.json");
+            String usuariosJson = gson.toJson(usuarios);
+            fileWriter.write(usuariosJson);
+            fileWriter.close();
         } catch (IOException e) {
             System.out.println("Arquivo nao encontrado");
         }
-        return new ArrayList<>();
     }
 
     public void cadastra(UsuarioComum usuario) {
@@ -52,12 +59,13 @@ public class RepositorioUsuarioComum {
             Usuario[] usuarioComums = gson.fromJson(fileReader, Usuario[].class);
             List<Usuario> usuarios = new ArrayList<>();
             if (usuarioComums != null) {
-                usuarios = Arrays.asList(usuarioComums);
+                usuarios = new ArrayList<>(Arrays.asList(usuarioComums));
             }
 
             if (jaCadastrado(usuarios, usuario)) {
                 System.out.println("Usuario ja cadastrado");
             }
+            System.out.println("Usuario criado");
             usuarios.add(usuario);
             FileWriter fileWriter = new FileWriter("usuarios-basicos.json");
             String usuariosJson = gson.toJson(usuarios);

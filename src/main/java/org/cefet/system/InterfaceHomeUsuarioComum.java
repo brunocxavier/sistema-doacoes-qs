@@ -1,30 +1,28 @@
 package org.cefet.system;
 
-import org.cefet.model.Usuario;
 import org.cefet.model.UsuarioComum;
 
-import java.util.Scanner;
+import static org.cefet.App.SCANNER;
 
 public class InterfaceHomeUsuarioComum {
     public void exibe(UsuarioComum usuarioComum) {
-        InterfaceItensDoadosPorMim interfaceItensDoadosPorMim = new InterfaceItensDoadosPorMim();
-        InterfacePesquisaItens interfacePesquisaItens = new InterfacePesquisaItens();
-        Scanner scanner = new Scanner(System.in);
+        InterfaceMinhasDoacoes interfaceMinhasDoacoes = new InterfaceMinhasDoacoes();
+        InterfacePesquisaItensDisponiveis interfacePesquisaItensDisponiveis = new InterfacePesquisaItensDisponiveis();
 
         while (true) {
             System.out.println("Opções:");
             System.out.println("P -> pesquisar items");
-            System.out.println("D -> doar");
+            System.out.println("M -> meus itens");
             System.out.println("Q -> deslogar");
 
-            String option = scanner.nextLine();
+            String option = SCANNER.nextLine();
 
-            if (option.equalsIgnoreCase("q")) {
+            if ("q".equalsIgnoreCase(option)) {
                 break;
-            } else if (option.equalsIgnoreCase("p")) {
-                interfacePesquisaItens.exibe(usuarioComum);
-            } else if (option.equalsIgnoreCase("d")) {
-                interfaceItensDoadosPorMim.exibe(usuarioComum);
+            } else if ("p".equalsIgnoreCase(option)) {
+                interfacePesquisaItensDisponiveis.exibe(usuarioComum);
+            } else if ("m".equalsIgnoreCase(option)) {
+                interfaceMinhasDoacoes.exibe(usuarioComum);
             } else {
                 System.out.println("Opção inválida");
             }

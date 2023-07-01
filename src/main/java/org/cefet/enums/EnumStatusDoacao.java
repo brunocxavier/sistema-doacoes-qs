@@ -1,6 +1,6 @@
 package org.cefet.enums;
 
-public enum EnumStatusItem {
+public enum EnumStatusDoacao {
     APROVADO,
     ARGUADANDO_APROVACAO,
     DOADO,

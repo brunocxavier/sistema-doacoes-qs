@@ -17,6 +17,5 @@ public class App
     {
         InterfaceInicial interfaceInicial = new InterfaceInicial();
         interfaceInicial.exibe();
-        System.out.println( "Hello World!" );
     }
 }
